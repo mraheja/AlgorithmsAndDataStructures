@@ -11,9 +11,9 @@ package Trees.DataStructures;
  */
 
 public class SegTreeMax {
-    int[] tree;
-    int[] lazy;
-    int[] d;
+    public int[] tree;
+    public int[] lazy;
+    public int[] d;
 
     public SegTreeMax(int N) {
         tree = new int[N * 4 + 1];
