@@ -7,11 +7,23 @@ package Tester;
 
 import AdditionalAlgorithms.Inversions;
 import AdditionalAlgorithms.RelativeData;
+import AdditionalDataStructures.Trie;
 import DynamicProgramming.Knapsack;
 import DynamicProgramming.LongestCommonSubsequence;
 import DynamicProgramming.LongestIncreasingSubsequence;
 import DynamicProgramming.PrefixSums;
+import Graph.ArticulationPoint;
+import Graph.BiconnectedComponents;
+import Graph.Bridges;
+import Graph.Tarjan;
+import Graph.MST;
+import Graph.SCCTarjan;
+import Graph.ShortestPath;
+import Graph.ShortestPath.trip;
+import Matrices.Multiplication;
+import MaxFlow.FordFulkerson;
 import NumberTheory.*;
+import String.SuffixArray;
 import Trees.Algorithms.*;
 import Trees.DataStructures.BIT;
 import Trees.DataStructures.HeavyLightDecomp;
@@ -25,6 +37,7 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         //System.out.println("hi");
 //        Combinations e = new Combinations();
 //        int MOD = 7;
@@ -48,7 +61,6 @@ public class Main {
 //        
 //        LCA l = new LCA(N,al);
 //        System.out.println(l.LCA(7, 5));
-
 //          int[] d = {0,3,4,5,2};
 //          BIT b = new BIT(4,d);
 //          b.update(2, 1);
@@ -100,39 +112,38 @@ public class Main {
 //            //int l = lcs.lcs(s1.toCharArray(), s2.toCharArray(), s1.length(), s2.length());
 //            LongestIncreasingSubsequence lis = new LongestIncreasingSubsequence();
 //            System.out.println(lis.lis(d));
-        BufferedReader br = new BufferedReader(new FileReader("hld.in"));
-        int N = Integer.parseInt(br.readLine().trim());
-        HeavyLightDecomp hld = new HeavyLightDecomp(N);
-        for (int i = 0; i < N - 1; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            hld.addEdge(a, b, c);
-        }
-
-        hld.DFS(1);
-        hld.DFS2(1);
-        hld.initSegTree();
-        
-        System.out.println(Arrays.toString(hld.base));
-        
-       // hld.change(9, 100);
-       // System.out.println(Arrays.toString(hld.stm.tree));
-        //System.out.println(Arrays.toString(hld.chaintop));
-        hld.initLCA();
-        System.out.println("LOC 4 = " + hld.loc[4]);
-        System.out.println("LOC = " + Arrays.toString(hld.loc));
-        System.out.println(hld.n[6].chain);
-        System.out.println(hld.n[2].chain);
-        hld.change(5, 30);
-        System.out.println(hld.getMax(10, 1));
+//        BufferedReader br = new BufferedReader(new FileReader("hld.in"));
+//        int N = Integer.parseInt(br.readLine().trim());
+//        HeavyLightDecomp hld = new HeavyLightDecomp(N);
+//        for (int i = 0; i < N - 1; i++) {
+//            StringTokenizer st = new StringTokenizer(br.readLine());
+//            int a = Integer.parseInt(st.nextToken());
+//            int b = Integer.parseInt(st.nextToken());
+//            int c = Integer.parseInt(st.nextToken());
+//            hld.addEdge(a, b, c);
+//        }
+//
+//        hld.DFS(1);
+//        hld.DFS2(1);
+//        hld.initSegTree();
+//        
+//        System.out.println(Arrays.toString(hld.base));
+//        
+//       // hld.change(9, 100);
+//       // System.out.println(Arrays.toString(hld.stm.tree));
+//        //System.out.println(Arrays.toString(hld.chaintop));
+//        hld.initLCA();
+//        System.out.println("LOC 4 = " + hld.loc[4]);
+//        System.out.println("LOC = " + Arrays.toString(hld.loc));
+//        System.out.println(hld.n[6].chain);
+//        System.out.println(hld.n[2].chain);
+//        hld.change(5, 30);
+//        System.out.println(hld.getMax(10, 1));
 //        
 //        for (int i = 0; i < hld.n.length; i++) {
 //            System.out.println(i + " " + hld.n[i].chain);
 //        }
         //System.out.println(Arrays.toString(hld.w));
-
         // System.out.println(Arrays.toString(hld.base));
 //        int[] d = {0, 1, 2, 4, 3};
 //
@@ -141,7 +152,167 @@ public class Main {
 //       // seg.update(1, 6);
 //        int ans = seg.query(1, 1, 4, 1, 4);
 //        System.out.println(ans);
+//        Trie t = new Trie();
+//        String[] trie = {"algo","tree","trie","aplo","algo"};
+//        for (String e: trie) {
+//            char[] p = e.toCharArray();
+//            t.add(t.root, p, 0);
+//        }
+//        String check = "tr";
+//        System.out.println(t.cpre(t.root, check.toCharArray() , 0));
+//        //t.add(t.root, , 0);
+//        System.exit(0);
+//        SuffixArray sa = new SuffixArray();
+//        String s = "ABAAB";
+//        int[] d = sa.suff(s);
+//        
+//        for (int i = 0; i < d.length; i++) {
+//            System.out.println(s.substring(d[i]));
+//        }
+        //System.exit(0);
+        /*      
+        BufferedReader br = new BufferedReader(new FileReader("graph.in"));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+       
+        ArrayList<Integer>[] al1 = new ArrayList[N+1];
+        
+        for (int i = 0; i <= N; i++) {
+            al1[i] = new ArrayList<Integer>();
+        }
+        
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            al1[a].add(b);
+            al1[b].add(a);
+            
+        }
+        
+        SCCTarjan t = new SCCTarjan(al1);
+        Bridges l = new Bridges(al1);
+        ArticulationPoint ap = new ArticulationPoint(al1);
+        BiconnectedComponents bcc = new BiconnectedComponents(al1);
+         */
+//        BufferedReader br = new BufferedReader(new FileReader("graph.in"));
+//        StringTokenizer st = new StringTokenizer(br.readLine());
+//        int N = Integer.parseInt(st.nextToken());
+//        int M = Integer.parseInt(st.nextToken());
+//        ArrayList<pair>[] al = new ArrayList[N + 1];
+//        // ArrayList<MST.trip> edges =new ArrayList<MST.trip>();
+//        MST.trip[] edges = new MST.trip[2 * M];
+//        int[][] am = new int[N + 1][N + 1];
+//        for (int i = 0; i < al.length; i++) {
+//            al[i] = new ArrayList<pair>();
+//        }
+//        for (int i = 0; i < am.length; i++) {
+//            Arrays.fill(am[i], 0);
+//            am[i][i] = 0;
+//        }
+//
+//        for (int i = 0; i < M; i++) {
+//            st = new StringTokenizer(br.readLine());
+//            int a = Integer.parseInt(st.nextToken());
+//            int b = Integer.parseInt(st.nextToken());
+//            int c = Integer.parseInt(st.nextToken());
+//            am[a][b] = c;
+//            al[a].add(new pair(b, c));
+//            al[b].add(new pair(a, c));
+//            edges[i * 2] = new MST.trip(a, b, c);
+//            edges[i * 2 + 1] = new MST.trip(b, a, c);
+//        }
+//
+//        for (int i = 0; i < al.length; i++) {
+//            System.out.println(al[i]);
+//        }
+//
+//        FordFulkerson f = new FordFulkerson();
+//        System.out.println("MAXFLOW = " + f.MaxFlow(am, 1, N));
+//        System.exit(0);
+        
+        long[][] a = {{0,1,1},{1,1,1},{1,1,0}};
+        long[][] b = {{0,2,2}};
+        
+        long[][] c = Multiplication.exp(a, 142109, 1000000009);
+        //long[][] c = Multiplication.mult(b, a, 59);
+        
+        for (int i = 0; i < c.length; i++) {
+            System.out.println(Arrays.toString(c[i]));
+        }
+        /*
+        System.exit(0);
+        br = new BufferedReader(new FileReader("graph.in"));
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        ArrayList<pair>[] al = new ArrayList[N + 1];
+        // ArrayList<MST.trip> edges =new ArrayList<MST.trip>();
+        MST.trip[] edges = new MST.trip[2 * M];
+        int[][] am = new int[N + 1][N + 1];
+        for (int i = 0; i < al.length; i++) {
+            al[i] = new ArrayList<pair>();
+        }
+        for (int i = 0; i < am.length; i++) {
+            Arrays.fill(am[i], 1 << 20);
+            am[i][i] = 0;
+        }
 
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            am[a][b] = c;
+            am[b][a] = c;
+            al[a].add(new pair(b, c));
+            al[b].add(new pair(a, c));
+            edges[i * 2] = new MST.trip(a, b, c);
+            edges[i * 2 + 1] = new MST.trip(b, a, c);
+        }
+
+        for (Object e : al) {
+            System.out.println(e);
+        }
+
+        ShortestPath sp = new ShortestPath();
+        //System.out.println(sp.dijk(al, 1, 9));
+        //System.out.println(sp.bellmanford(edges, N, 1,9));
+
+        int[] x = (new MST()).kruskal(N, edges);
+        for (int i = 0; i < x.length; i++) {
+            x[i] /= 2;
+        }
+        System.out.println(Arrays.toString(x));
+//        int[][] fin = sp.floids(N, am);
+//        for (int i = 0; i < fin.length; i++) {
+//            for (int j = 0; j < fin[0].length; j++) {
+//                System.out.print(fin[i][j] + " ");
+//            }
+//            System.out.println("");
+//        }
+         */
+
+    }
+    
+     public static class pair implements Comparable<pair> {
+
+        public int a, b;
+
+        public pair(int _a, int _b) {
+            this.a = _a;
+            this.b = _b;
+        }
+
+        @Override
+        public int compareTo(pair t) {
+            return (a == t.a) ? b - t.b : a - t.a;
+        }
+
+        public String toString() {
+            return a + "";
+        }
     }
 }
 

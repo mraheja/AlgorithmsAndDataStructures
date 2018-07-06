@@ -8,6 +8,7 @@ package DynamicProgramming;
 /**
  * © Mehul Raheja
  */
+
 public class PrefixSums {
 
     public int[] pref(int[] d) {
